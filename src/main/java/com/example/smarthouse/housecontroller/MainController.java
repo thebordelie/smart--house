@@ -24,14 +24,24 @@ public class MainController implements Hub {
         sensors.put(sensor.getSensorId(), sensor);
     }
 
-    @Override
-    public void executeCommand(int sensorId, CommandType command) {
-        commands.get(command).execute(sensors.get(sensorId));
-    }
+
 
     @Override
     public List<DefaultSensor> getSensorsInfo() {
         return sensors.values().stream().collect(Collectors.toList());
     }
-
+    @Override
+    public void executeCommand(int sensorId, CommandType command) {
+        DefaultSensor sensor = sensors.get(sensorId);
+        if (sensor != null) {
+            Command cmd = commands.get(command);
+            if (cmd != null) {
+                cmd.execute(sensor);
+            } else {
+                throw new IllegalArgumentException("Command not found: " + command);
+            }
+        } else {
+            throw new IllegalArgumentException("Sensor not found: " + sensorId);
+        }
+    }
 }
