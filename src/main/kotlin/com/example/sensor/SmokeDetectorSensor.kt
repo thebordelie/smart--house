@@ -9,7 +9,7 @@ import com.example.smarthouse.sensor.DefaultSensor
 
 import java.util.*
 
-class SmokeDetectorSensor(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class SmokeDetectorSensor(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.ON, sensorProtocol, SensorType.SMOKE_DETECTOR_SENSOR) {
     private var smokeDetected = false
     fun detectSmoke() {

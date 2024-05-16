@@ -6,7 +6,7 @@ import com.example.message.Message
 import com.example.smarthouse.sensor.DefaultSensor
 import java.util.*
 
-class SecuritySensor(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class SecuritySensor(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.ON, sensorProtocol, SensorType.SECURITY_SENSOR) {
     private var alarmActivated = false
     fun activateAlarm() {

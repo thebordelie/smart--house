@@ -8,7 +8,7 @@ import com.example.message.Message
 import com.example.smarthouse.sensor.DefaultSensor
 import java.util.*
 
-class HumiditySensor(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class HumiditySensor(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.ON, sensorProtocol, SensorType.HUMIDITY_SENSOR) {
     private var leakDetected = false
     fun detectLeak() {
@@ -25,7 +25,6 @@ class HumiditySensor(sensorId: Int, sensorName: String?, sensorProtocol: SensorP
     private fun activateAlarm() {
         // Calling an alarm from commands
     }
-
 
     override val dataFromSensor: Message
         get() = Message(

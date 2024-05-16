@@ -8,7 +8,7 @@ import com.example.message.MessageType
 import com.example.smarthouse.sensor.DefaultSensor
 import java.util.*
 
-class VacuumCleaner(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class VacuumCleaner(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.VACUUM_CLEANER) {
 
     private var isOn = false

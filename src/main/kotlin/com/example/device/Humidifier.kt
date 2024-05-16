@@ -8,7 +8,7 @@ import com.example.message.MessageType
 import com.example.smarthouse.sensor.DefaultSensor
 import java.util.*
 
-class Humidifier(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class Humidifier(val sensorId: Int,val sensorName: String?,val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.HUMIDIFIER) {
 
     private var isOn = false

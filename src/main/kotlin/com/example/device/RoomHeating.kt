@@ -9,7 +9,7 @@ import com.example.smarthouse.sensor.DefaultSensor
 import com.example.smarthouse.sensor.temperature.TemperatureSensor
 import java.util.*
 
-class RoomHeating(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class RoomHeating(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.ROOM_HEATING) {
 
     private var isOn = false
@@ -18,7 +18,7 @@ class RoomHeating(sensorId: Int, sensorName: String?, sensorProtocol: SensorProt
 
     private var temperatureSensor: TemperatureSensor? = null
 
-    fun increaseTemperature(currentTemperature: Double) {
+    fun increaseTemperature(currentTemperature: Double): Double {
         if (!isOn) {
             turnOn()
         }
@@ -28,8 +28,7 @@ class RoomHeating(sensorId: Int, sensorName: String?, sensorProtocol: SensorProt
             timer?.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
                     if (desiredTemperature > currentTemperature) {
-                        desiredTemperature--
-                        temperatureSensor?.setCurrentTemperature(desiredTemperature)
+                        currentTemperature-1
                     } else {
                         timer?.cancel()
                     }
@@ -38,6 +37,7 @@ class RoomHeating(sensorId: Int, sensorName: String?, sensorProtocol: SensorProt
         } else {
             turnOff()
         }
+        return currentTemperature// Увеличиваем текущую температуру
     }
 
     fun setDesiredTemperature(temperature: Double) {

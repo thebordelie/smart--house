@@ -10,10 +10,10 @@ import com.example.smarthouse.sensor.airconditioner.AirConditioner
 import com.example.smarthouse.sensor.roomheating.RoomHeating
 import java.util.*
 
-class TemperatureSensor(
-    sensorId: Int,
-    sensorName: String?,
-    sensorProtocol: SensorProtocol?,
+data class TemperatureSensor(
+    val sensorId: Int,
+    val sensorName: String?,
+    val sensorProtocol: SensorProtocol?,
     private val roomHeating: RoomHeating,
     private val airConditioner: AirConditioner
 ) : DefaultSensor(sensorId, sensorName, SensorState.ON, sensorProtocol, SensorType.TEMPERATURE_SENSOR) {
@@ -37,11 +37,11 @@ class TemperatureSensor(
         return currentTemperature
     }
 
-    private fun manageTemperature() {
+    private fun manageTemperature() { // TODO тут как-то седлать чтобы обогреватель не грел а
         if (currentTemperature < roomHeating.desiredTemperature) {
-            roomHeating.increaseTemperature(currentTemperature)
+            currentTemperature = roomHeating.increaseTemperature(currentTemperature)
         } else if (currentTemperature > airConditioner.desiredTemperature) {
-            airConditioner.decreaseTemperature(currentTemperature)
+            currentTemperature = airConditioner.decreaseTemperature(currentTemperature)
         } else {
             airConditioner.turnOff()
             roomHeating.turnOff()

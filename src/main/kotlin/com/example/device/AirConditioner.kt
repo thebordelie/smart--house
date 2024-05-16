@@ -9,7 +9,7 @@ import com.example.smarthouse.sensor.DefaultSensor
 import com.example.smarthouse.sensor.temperature.TemperatureSensor
 import java.util.*
 
-class AirConditioner(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class AirConditioner(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.AIR_CONDITIONER) {
 
     private var isOn = false
@@ -18,7 +18,7 @@ class AirConditioner(sensorId: Int, sensorName: String?, sensorProtocol: SensorP
 
     private var temperatureSensor: TemperatureSensor? = null
 
-    fun decreaseTemperature(currentTemperature: Double) {
+    fun decreaseTemperature(currentTemperature: Double): Double {
         if (!isOn) {
             turnOn()
         }
@@ -28,8 +28,7 @@ class AirConditioner(sensorId: Int, sensorName: String?, sensorProtocol: SensorP
             timer?.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
                     if (desiredTemperature < currentTemperature) {
-                        desiredTemperature++
-                        temperatureSensor?.setCurrentTemperature(desiredTemperature)
+                        currentTemperature+1
                     } else {
                         timer?.cancel()
                     }
@@ -38,6 +37,7 @@ class AirConditioner(sensorId: Int, sensorName: String?, sensorProtocol: SensorP
         } else {
             turnOff()
         }
+        return currentTemperature // Уменьшаем текущую температуру
     }
 
     fun setDesiredTemperature(temperature: Double) {

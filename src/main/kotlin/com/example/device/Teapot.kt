@@ -8,7 +8,7 @@ import com.example.message.MessageType
 import com.example.smarthouse.sensor.DefaultSensor
 import java.util.*
 
-class Teapot(sensorId: Int, sensorName: String?, sensorProtocol: SensorProtocol?) :
+data class Teapot(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.TEAPOT) {
 
     private var isOn = false
