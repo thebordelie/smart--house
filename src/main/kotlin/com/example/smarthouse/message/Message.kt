@@ -17,5 +17,11 @@ class Message(
     init {
         this.sensorType = sensorType
     }
+
+    override fun toString(): String {
+        return "Message(sensorId=$sensorId, sensorData=$sensorData, messageDate=$messageDate, messageType=$messageType, description=$description, sensorType=$sensorType)"
+    }
+
+
 }
 

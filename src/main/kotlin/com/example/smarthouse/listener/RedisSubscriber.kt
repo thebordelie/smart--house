@@ -1,39 +1,35 @@
 package com.example.smarthouse.listener
 
-import kotlinx.coroutines.*
+import com.example.smarthouse.service.HouseService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPubSub
 
 class RedisSubscriber(host: String, port: Int) {
 
     private var listener: Jedis;
+    private var houseService: HouseService = HouseService();
     private val jedisPubSub = object : JedisPubSub() {
-        override fun onMessage(channel: String, message: String) {
-            val request = message.split("/")
+        override fun onPMessage(pattern: String, channel: String, message: String) = runBlocking {
+            launch {
+                val response = houseService.handleRequest(message, channel)
 
+
+            }
             println("message $message")
         }
     }
-
     init {
         this.listener = Jedis(host, port)
     }
 
-    fun start() = runBlocking {
-        launch(Dispatchers.IO) { subscribeToChannels() }
+    fun start() {
+        listener.psubscribe(jedisPubSub, "*")
     }
 
-    private suspend fun subscribeToChannels() {
-        withContext(Dispatchers.IO) {
-            try {
-                listener.subscribe(jedisPubSub, "*")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                listener.close()
-            }
-        }
+    fun stop() {
+        listener.close()
     }
-
-
 }

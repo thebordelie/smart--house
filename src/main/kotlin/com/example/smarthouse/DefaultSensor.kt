@@ -33,6 +33,10 @@ abstract class DefaultSensor(
         // Здесь можно реализовать выполнение команды
         return null
     }
+
+    fun getId() :Int {
+        return sensorId;
+    }
 }
 
 

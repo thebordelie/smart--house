@@ -5,12 +5,13 @@ import com.example.config.SensorState
 import com.example.config.SensorType
 import com.example.message.Message
 import com.example.message.MessageType
+import com.example.smarthouse.device.DefaultDevice
 import com.example.smarthouse.sensor.DefaultSensor
 import com.example.smarthouse.sensor.temperature.TemperatureSensor
 import java.util.*
 
 data class AirConditioner(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
-    DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.AIR_CONDITIONER) {
+    DefaultDevice(sensorId, "Air Conditioner", false) {
 
     private var isOn = false
     var desiredTemperature: Double = 20.0
@@ -49,16 +50,6 @@ data class AirConditioner(val sensorId: Int, val sensorName: String?, val sensor
     }
 
     private var timer: Timer? = null
-
-    fun turnOn() {
-        isOn = true
-        println("Air Conditioner turned ON")
-    }
-
-    fun turnOff() {
-        isOn = false
-        println("Air Conditioner turned OFF")
-    }
 
     override val dataFromSensor: Message
         get() = Message(

@@ -21,6 +21,17 @@ abstract class DefaultDevice(
             SensorType.DEVICE_STATE
         )
 
+    fun getMessage() : Message {
+        return Message(
+            deviceId,
+            if (isOn) 1 else 0,
+            Date(),
+            MessageType.SENSOR_DATA,
+            if (isOn) "$deviceName is ON" else "$deviceName is OFF",
+            SensorType.DEVICE_STATE
+        )
+    }
+
     fun turnOn() {
         isOn = true
         println("$deviceName turned on")
@@ -31,7 +42,7 @@ abstract class DefaultDevice(
         println("$deviceName turned off")
     }
 
-    fun isOn(): Boolean {
+    fun getOn(): Boolean {
         return isOn
     }
 
@@ -44,7 +55,11 @@ abstract class DefaultDevice(
     }
 
     open fun executeCommand(command: CommandType, parameters: Any? = null): Message? {
-        // Здесь можно реализовать выполнение команды
-        return null
+        when (command) {
+            CommandType.SWITCH_SENSOR -> if (isOn) turnOff() else turnOn()
+            CommandType.GET_DATA -> dataFromSensor
+            else -> {throw Exception("invalid command")}
+        }
+        return getMessage()
     }
 }
