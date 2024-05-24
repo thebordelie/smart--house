@@ -4,12 +4,14 @@ import com.example.command.CommandType
 import com.example.config.SensorType
 import com.example.message.MessageType
 import com.example.message.Message
+import com.example.smarthouse.config.DeviceType
 import java.util.Date
 
 abstract class DefaultDevice(
     private val deviceId: Int,
     private val deviceName: String?,
-    private var isOn: Boolean
+    private var isOn: Boolean,
+    private var type: DeviceType
 ) {
     open val dataFromSensor: Message
         get() = Message(
@@ -18,7 +20,7 @@ abstract class DefaultDevice(
             Date(),
             MessageType.SENSOR_DATA,
             if (isOn) "$deviceName is ON" else "$deviceName is OFF",
-            SensorType.DEVICE_STATE
+            type
         )
 
     fun getMessage() : Message {

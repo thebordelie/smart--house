@@ -10,12 +10,12 @@ class Message(
     val messageDate: Date,
     val messageType: MessageType,
     val description: String?,
-    sensorType: SensorType
+    type: Any
 ) {
-    val sensorType: SensorType
+    val sensorType: Any
 
     init {
-        this.sensorType = sensorType
+        this.sensorType = type
     }
 
     override fun toString(): String {

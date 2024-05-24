@@ -5,12 +5,14 @@ import com.example.config.SensorState
 import com.example.config.SensorType
 import com.example.message.Message
 import com.example.message.MessageType
+import com.example.smarthouse.config.DeviceType
+import com.example.smarthouse.device.DefaultDevice
 import com.example.smarthouse.sensor.DefaultSensor
 import com.example.smarthouse.sensor.temperature.TemperatureSensor
 import java.util.*
 
 data class RoomHeating(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
-    DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.ROOM_HEATING) {
+    DefaultDevice(sensorId, sensorName, false, DeviceType.ROOM_HEATING) {
 
     private var isOn = false
     var desiredTemperature: Double = 20.0
@@ -49,24 +51,4 @@ data class RoomHeating(val sensorId: Int, val sensorName: String?, val sensorPro
     }
 
     private var timer: Timer? = null
-
-    fun turnOn() {
-        isOn = true
-        println("Room Heating turned ON")
-    }
-
-    fun turnOff() {
-        isOn = false
-        println("Room Heating turned OFF")
-    }
-
-    override val dataFromSensor: Message
-        get() = Message(
-            sensorId,
-            if (isOn) 1 else 0,
-            Date(),
-            MessageType.SENSOR_DATA,
-            if (isOn) "Room Heating is ON" else "Room Heating is OFF",
-            SensorType.ROOM_HEATING
-        )
 }

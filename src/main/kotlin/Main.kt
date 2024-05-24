@@ -9,14 +9,8 @@ import redis.clients.jedis.JedisPubSub
 
 
 fun main(args: Array<String>) {
-//    println("Hello World!")
-//    var listener = RedisSubscriber("localhost", 6379)
-//    listener.start()
-//    listener.stop()
+    var listener = RedisSubscriber("localhost", 6379)
 
-    var tmp = AirConditioner(1,"hum", SensorProtocol.WIFI)
-    println(tmp.getOn())
-    println(tmp.executeCommand(CommandType.SWITCH_SENSOR))
-    println(tmp.getOn())
-
+    listener.start()
+    listener.stop()
 }

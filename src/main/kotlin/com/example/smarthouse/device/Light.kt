@@ -8,9 +8,10 @@ import com.example.message.Message
 import com.example.smarthouse.sensor.DefaultSensor
 import java.util.*
 
-data class Light(val sensorId: Int,val sensorName: String?,val sensorProtocol: SensorProtocol?) :
+data class Light(val sensorId: Int, val sensorName: String?, val sensorProtocol: SensorProtocol?) :
     DefaultSensor(sensorId, sensorName, SensorState.OFF, sensorProtocol, SensorType.SMART_LIGHT) {
     var lightOn = false
+
     fun switchLight() {
         lightOn = !lightOn
         if (lightOn) {
