@@ -71,7 +71,7 @@ class HouseService {
                 controllers[user]?.executeCommand(Integer.parseInt(requestParams[1]), CommandType.SWITCH_SENSOR)
                 return Response(user, "ok", "")
             }
-            else -> Response(channel, "error", "/Unknown operation")
+            else -> Response(user, "error", "/Unknown operation")
         }
     }
 
