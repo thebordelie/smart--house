@@ -15,7 +15,7 @@ import java.util.Optional
 
 class Requester : Request {
     var client: HttpClient = HttpClient(CIO)
-    var base_url = "http://localhost:8080"
+    var base_url = "http://localhost:8080/"
 
     override suspend fun get(url: String, token: String, id: Optional<Int>) {
         client.get("$base_url$url/$id") {
@@ -25,12 +25,12 @@ class Requester : Request {
         }
     }
 
-    override suspend fun post(url: String, body: String, token: String): Any {
-        val response = client.post(base_url + url) {
+    override suspend fun post(url: String, body: String, vararg token: String): Any {
+        val response = client.post("$base_url$url") {
             contentType(ContentType.Application.Json)
             if (token.isNotEmpty()) {
                 headers {
-                    append(HttpHeaders.Authorization, token)
+                    append(HttpHeaders.Authorization, token[0])
                 }
             }
             setBody(body)

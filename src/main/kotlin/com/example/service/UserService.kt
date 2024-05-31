@@ -25,6 +25,9 @@ class UserService {
         for (device in 5..(6..15).random()) {
             users[token]?.add(requestGenerator.createNewDevice(token))
         }
-        for (getRequest in 5..(6..15).random()) requestGenerator.sendRandomGetRequest(token, Optional.empty())
+        for (getRequest in 5..(6..15).random())
+            requestGenerator.sendRandomGetRequest(token, Optional.of(
+            users[token]?.get((0..(users[token]?.size ?: 0)).random()) ?: 0
+        ))
     }
 }
