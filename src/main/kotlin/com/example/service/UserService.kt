@@ -1,9 +1,12 @@
 package com.example.service
 
 import com.example.model.Device
+import com.example.model.User
 import com.example.model.UserEmulator
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.Optional
 
 class UserService {
