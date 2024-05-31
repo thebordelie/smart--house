@@ -2,6 +2,7 @@ package com.example.service
 
 import com.example.request.Request
 import com.example.request.Requester
+import java.util.Optional
 
 class RequestGenerator : Generator {
 
@@ -12,11 +13,11 @@ class RequestGenerator : Generator {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createNewDevice(): Int {
+    override suspend fun createNewDevice(token: String): Int {
         TODO("Not yet implemented")
     }
 
-    override suspend fun sendRandomGetRequest() {
+    override suspend fun sendRandomGetRequest(token: String, id: Optional<Int>) {
         TODO("Not yet implemented")
     }
 }
