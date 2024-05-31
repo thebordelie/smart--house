@@ -12,4 +12,7 @@ interface Generator {
     suspend fun createNewDevice(token: String): Int
 
     suspend fun sendRandomGetRequest(token: String, id: Optional<Int>)
+
+    suspend fun createTurnOn(id: Int)
+
 }

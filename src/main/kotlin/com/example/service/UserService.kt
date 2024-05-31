@@ -25,12 +25,18 @@ class UserService {
     private suspend fun createUserTest() {
         val token = requestGenerator.createNewUser()
         users[token] = ArrayList()
-        for (device in 5..(6..15).random()) {
+        for (device in 2..(3..5).random()) {
             users[token]?.add(requestGenerator.createNewDevice(token))
         }
-        for (getRequest in 5..(6..15).random())
-            requestGenerator.sendRandomGetRequest(token, Optional.of(
-            users[token]?.get((0..(users[token]?.size ?: 0)).random()) ?: 0
-        ))
+        for (getRequest in 2..(3..5).random()) {
+            requestGenerator.sendRandomGetRequest(
+                token, Optional.of(
+                    users[token]?.get((0..(users[token]?.size ?: 0)).random()) ?: 0
+                )
+            )
+            requestGenerator.createTurnOn(
+                users[token]?.get((0..(users[token]?.size ?: 0)).random()) ?: 0
+            )
+        }
     }
 }

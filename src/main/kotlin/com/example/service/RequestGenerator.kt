@@ -70,4 +70,9 @@ class RequestGenerator : Generator {
             e.printStackTrace()
         }
     }
+
+    override suspend fun createTurnOn(id: Int) {
+        val mode = Random.nextBoolean()
+        val response = request.post("device/settings/${id} ", "{\"mode\":\"$mode\"}") as HttpResponse
+    }
 }

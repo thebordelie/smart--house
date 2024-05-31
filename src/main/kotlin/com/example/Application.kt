@@ -11,6 +11,5 @@ import io.ktor.http.contentType
 
 suspend fun main(args: Array<String>) {
     UserService().testServices()
-
 }
 
