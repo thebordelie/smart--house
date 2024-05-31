@@ -25,6 +25,17 @@ abstract class DefaultSensor(
             sensorType
         )
 
+    fun getMessage() : Message {
+        return Message(
+            sensorId,
+            0,
+            Date(),
+            MessageType.SENSOR_DATA,
+            null,
+            SensorType.DEVICE_STATE
+        )
+    }
+
     fun setSensorState(sensorState: SensorState) {
         this.sensorState = sensorState
     }

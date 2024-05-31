@@ -27,8 +27,8 @@ class MainController : HubInterface {
 
     fun getInfo(id: Int): String {
         return when {
-            sensors[id] != null -> sensors[id].toString()
-            devices[id] != null -> devices[id].toString()
+            sensors[id] != null -> sensors[id]?.getMessage().toString()
+            devices[id] != null -> devices[id]?.getMessage().toString()
             else -> throw Exception("invalid id")
         }
     }
@@ -44,6 +44,12 @@ class MainController : HubInterface {
         }
     }
 
+    override fun toString(): String {
+        return "MainController(hubId=$hubId, ownerId=$ownerId, sensors=$sensors, devices=$devices)"
+    }
+
     override val sensorsInfo: List<Any?>
         get() = sensors.values.toList()
+
+
 }

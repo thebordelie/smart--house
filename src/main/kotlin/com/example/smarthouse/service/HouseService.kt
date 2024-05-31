@@ -28,6 +28,7 @@ class HouseService {
     suspend fun handleRequest(request: String, channel: String): Response? {
         val requestParams = request.split("/")
         println(requestParams)
+
         if (channel == "create_controller") {
             var uid = requestParams[0]
             var cid = Integer.parseInt(requestParams[1])
@@ -36,36 +37,39 @@ class HouseService {
                 controllers[uid] = MainController()
             }
             createDevice(name, cid)?.let { device ->
-                controllers[channel]?.addNewDevice(device)
+                controllers[uid]?.addNewDevice(device)
             }
             createSensor(name, cid)?.let { sensor ->
-                controllers[channel]?.addNewSensor(sensor)
+                controllers[uid]?.addNewSensor(sensor)
             }
-            return Response(channel, "ok", "")
+            println(controllers[uid].toString())
+            return Response(uid, "ok", "")
         }
+        var user = channel.split("_")[1]
+        var cid =Integer.parseInt(requestParams[1])
         return when (requestParams[0]) {
-            "get" -> controllers[channel]?.let {
+            "get" -> controllers[user]?.let {
                 return Response(
-                    channel,
+                    user,
                     "ok",
-                    it.getInfo(Integer.parseInt(requestParams[1]))
+                    it.getInfo(cid)
                 )
             }
             "set" -> {
-                controllers[channel]?.executeCommand(
-                    Integer.parseInt(requestParams[1]),
+                controllers[user]?.executeCommand(
+                    cid,
                     CommandType.CHANGE_CONFIG,
                     requestParams[2]
                 )
-                return Response("uid", "ok", "")
+                return Response(user, "ok", "")
             }
             "on" -> {
-                controllers[channel]?.executeCommand(Integer.parseInt(requestParams[1]), CommandType.SWITCH_SENSOR)
-                return Response("uid", "ok", "")
+                controllers[user]?.executeCommand(Integer.parseInt(requestParams[1]), CommandType.SWITCH_SENSOR)
+                return Response(user, "ok", "")
             }
             "off" -> {
-                controllers[channel]?.executeCommand(Integer.parseInt(requestParams[1]), CommandType.SWITCH_SENSOR)
-                return Response("uid", "ok", "")
+                controllers[user]?.executeCommand(Integer.parseInt(requestParams[1]), CommandType.SWITCH_SENSOR)
+                return Response(user, "ok", "")
             }
             else -> Response(channel, "error", "/Unknown operation")
         }

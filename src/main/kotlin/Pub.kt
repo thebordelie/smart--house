@@ -6,6 +6,8 @@ fun main(args: Array<String>) {
     val jedis1 = Jedis("localhost", 6379)
 
     jedis1.publish("create_controller", "ilya/1/teapot");
-    jedis1.publish("uid_ilya", "get/123");
+    jedis1.publish("uid_ilya", "get/1");
+    jedis1.publish("uid_ilya", "on/1");
+    jedis1.publish("uid_ilya", "get/1");
     jedis1.close()
 }

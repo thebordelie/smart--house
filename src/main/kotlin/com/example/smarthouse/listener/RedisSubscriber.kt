@@ -19,6 +19,7 @@ class RedisSubscriber(host: String, port: Int) {
             launch {
                 println(message)
                 val response = houseService.handleRequest(message, channel)
+                println(response)
                 if (response != null) {
                     publisher.pubResponse(response.uid, response.status, response.data)
                     publisher.pubLog(message.split("/")[0], Date())
